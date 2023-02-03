@@ -28,7 +28,7 @@ const Room = ({ room, setGroupOnOff }: IRoomProps) => {
 				<div style={{ paddingLeft: "1rem" }}>{room.name}</div>
 			</div>
 			<div>
-				<Switch checked={on} onChange={handleChange} color="default" />
+				<Switch checked={on} onChange={handleChange} />
 			</div>
 		</div>
 	);
