@@ -53,6 +53,17 @@ body {
 }
 
 .scene-list {
-	/* position: absolute; */
 	text-align: center;
+}
+
+.help-btn {
+	position: absolute;
+	top: 1.5rem;
+	right: 1.7rem;
+}
+
+.logout-btn {
+	position: absolute;
+	top: 0.8rem;
+	left: 0.8rem;
 }

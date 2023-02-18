@@ -6,7 +6,7 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness5Icon from "@mui/icons-material/Brightness5";
 import Brightness6Icon from "@mui/icons-material/Brightness6";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import ComputerIcon from "@mui/icons-material/Computer";
+import DeskIcon from "@mui/icons-material/Desk";
 import HouseIcon from "@mui/icons-material/House";
 import PaletteIcon from "@mui/icons-material/Palette";
 import WeekendIcon from "@mui/icons-material/Weekend";
@@ -109,7 +109,7 @@ const getRoomIcon = (name: string) => {
 		case "Bedroom":
 			return <BedIcon />;
 		case "Study":
-			return <ComputerIcon />;
+			return <DeskIcon />;
 		case "Living Room":
 			return <WeekendIcon />;
 		default:
