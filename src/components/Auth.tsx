@@ -72,8 +72,9 @@ const Auth = ({ setLocalStorageItem, setApiUrl, ping }: IAuthProps) => {
 								onClick={async e => {
 									try {
 										e.preventDefault();
+										setError("");
 										if (!bridgeIpAddress || !username) {
-											setError("Both fields are required.");
+											setError("Both fields are required");
 											return;
 										}
 										const url = `https://${bridgeIpAddress}/api/${username}`;
@@ -82,7 +83,7 @@ const Auth = ({ setLocalStorageItem, setApiUrl, ping }: IAuthProps) => {
 										console.log(res);
 										if (res[0]?.error?.description) {
 											const { description } = res[0].error;
-											setError(description.charAt(0).toUpperCase() + description.slice(1) + ".");
+											setError(description.charAt(0).toUpperCase() + description.slice(1));
 											setIsLoading(false);
 											return;
 										}
@@ -91,7 +92,7 @@ const Auth = ({ setLocalStorageItem, setApiUrl, ping }: IAuthProps) => {
 										setIsLoading(false);
 									} catch (error) {
 										console.error(error);
-										setError("Error connecting to bridge.");
+										setError("Error connecting to bridge");
 										setIsLoading(false);
 									}
 								}}
