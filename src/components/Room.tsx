@@ -53,6 +53,7 @@ const Room = ({ room, scenes, setRoomOnOff, setRoomBrightness, setRoomScene, api
 		await setRoomScene(apiUrl, room.id, sceneId);
 		const res = await getRoom(apiUrl, room.id);
 		setBrightness(Math.round((res.action.bri / 254) * 100));
+		if (!on) setOn(true);
 	};
 
 	return (
