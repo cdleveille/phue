@@ -11,7 +11,6 @@ body {
 	font-size: 1.5rem;
 	color: #c4c4c4;
 	user-select: none;
-	overflow: hidden;
 	background-color: #252526;
 }
 
@@ -51,4 +50,9 @@ body {
 	padding-top: 2rem;
 	font-size: 1rem;
 	color: red;
+}
+
+.scene-list {
+	/* position: absolute; */
+	text-align: center;
 }

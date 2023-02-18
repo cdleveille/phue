@@ -5,14 +5,15 @@ import Head from "../components/Head";
 import Room from "../components/Room";
 import { useLights } from "../hooks/useLights";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { IRoom } from "../types/abstract";
+import { IRoom, IScene } from "../types/abstract";
 import { LOCAL_STORAGE_KEY } from "../types/constants";
 
 const Home = () => {
 	const [rooms, setRooms] = useState<IRoom[]>();
+	const [scenes, setScenes] = useState<IScene[]>();
 	const [apiUrl, setApiUrl] = useState("");
 	const { getLocalStorageItem, setLocalStorageItem } = useLocalStorage();
-	const { ping, getRooms, setRoomOnOff, setRoomBrightness } = useLights();
+	const { ping, getRooms, getScenes, getRoom, setRoomOnOff, setRoomBrightness, setRoomScene } = useLights();
 
 	useEffect(() => {
 		const url = getLocalStorageItem<string>(LOCAL_STORAGE_KEY);
@@ -22,7 +23,9 @@ const Home = () => {
 	useEffect(() => {
 		if (!apiUrl) return;
 		(async () => {
-			setRooms(await getRooms(apiUrl));
+			const [rooms, scenes] = await Promise.all([getRooms(apiUrl), getScenes(apiUrl)]);
+			setRooms(rooms);
+			setScenes(scenes);
 		})();
 	}, [apiUrl]);
 
@@ -36,9 +39,12 @@ const Home = () => {
 							<Room
 								key={i}
 								room={room}
+								scenes={scenes}
 								setRoomOnOff={setRoomOnOff}
 								setRoomBrightness={setRoomBrightness}
+								setRoomScene={setRoomScene}
 								apiUrl={apiUrl}
+								getRoom={getRoom}
 							/>
 						);
 					})

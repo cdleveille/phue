@@ -1,5 +1,5 @@
 import { mapKeyToId } from "../helpers/util";
-import { GroupsResponse, LightsResponse, ScenesResponse } from "../types/abstract";
+import { GroupsResponse, IRoom, LightsResponse, ScenesResponse } from "../types/abstract";
 import { useApi } from "./useApi";
 
 const { GET, PUT } = useApi();
@@ -25,6 +25,10 @@ export const useLights = () => {
 		return mapKeyToId(res);
 	};
 
+	const getRoom = async (apiUrl: string, id: string) => {
+		return await GET<IRoom>(`${apiUrl}/groups/${id}`);
+	};
+
 	const setRoomOnOff = async (apiUrl: string, id: string, on: boolean) => {
 		await PUT(`${apiUrl}/groups/${id}/action`, { on });
 	};
@@ -33,5 +37,9 @@ export const useLights = () => {
 		await PUT(`${apiUrl}/groups/${id}/action`, { bri });
 	};
 
-	return { ping, getLights, getRooms, getScenes, setRoomOnOff, setRoomBrightness };
+	const setRoomScene = async (apiUrl: string, id: string, scene: string) => {
+		await PUT(`${apiUrl}/groups/${id}/action`, { scene });
+	};
+
+	return { ping, getLights, getRooms, getScenes, getRoom, setRoomOnOff, setRoomBrightness, setRoomScene };
 };
