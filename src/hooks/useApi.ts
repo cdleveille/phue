@@ -1,7 +1,4 @@
 import { IResponse } from "../types/abstract";
-import { useConfig } from "./useConfig";
-
-const { API_URL } = useConfig();
 
 export const useApi = () => {
 	const request = async <T = any>(
@@ -29,7 +26,7 @@ export const useApi = () => {
 		});
 
 	const GET = async <T = any>(path: string) => {
-		return request<T>("GET", API_URL + path);
+		return request<T>("GET", path);
 	};
 
 	const POST = async <T = any>(
@@ -37,7 +34,7 @@ export const useApi = () => {
 		body?: Record<string, string | number | boolean>,
 		headers?: Record<string, string>
 	) => {
-		return request<T>("POST", API_URL + path, body, headers);
+		return request<T>("POST", path, body, headers);
 	};
 
 	const PUT = async <T = any>(
@@ -45,7 +42,7 @@ export const useApi = () => {
 		body?: Record<string, string | number | boolean>,
 		headers?: Record<string, string>
 	) => {
-		return request<T>("PUT", API_URL + path, body, headers);
+		return request<T>("PUT", path, body, headers);
 	};
 
 	const DELETE = async <T = any>(
@@ -53,7 +50,7 @@ export const useApi = () => {
 		body?: Record<string, string | number | boolean>,
 		headers?: Record<string, string>
 	) => {
-		return request<T>("DELETE", API_URL + path, body, headers);
+		return request<T>("DELETE", path, body, headers);
 	};
 
 	return { GET, POST, PUT, DELETE };

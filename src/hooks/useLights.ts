@@ -5,25 +5,33 @@ import { useApi } from "./useApi";
 const { GET, PUT } = useApi();
 
 export const useLights = () => {
-	const getLights = async () => {
-		const res = await GET<LightsResponse>("/lights");
+	const ping = async (apiUrl: string) => {
+		return await GET<any>(apiUrl);
+	};
+
+	const getLights = async (apiUrl: string) => {
+		const res = await GET<LightsResponse>(`${apiUrl}/lights`);
 		return mapKeyToId(res);
 	};
 
-	const getRooms = async () => {
-		const res = await GET<GroupsResponse>("/groups");
+	const getRooms = async (apiUrl: string) => {
+		const res = await GET<GroupsResponse>(`${apiUrl}/groups`);
 		const rooms = mapKeyToId(res);
 		return rooms.filter(room => room.type === "Room");
 	};
 
-	const getScenes = async () => {
-		const res = await GET<ScenesResponse>("/scenes");
+	const getScenes = async (apiUrl: string) => {
+		const res = await GET<ScenesResponse>(`${apiUrl}/scenes`);
 		return mapKeyToId(res);
 	};
 
-	const setGroupOnOff = async (groupId: string, on: boolean) => {
-		await PUT(`/groups/${groupId}/action`, { on });
+	const setRoomOnOff = async (apiUrl: string, id: string, on: boolean) => {
+		await PUT(`${apiUrl}/groups/${id}/action`, { on });
 	};
 
-	return { getLights, getRooms, getScenes, setGroupOnOff };
+	const setRoomBrightness = async (apiUrl: string, id: string, bri: number) => {
+		await PUT(`${apiUrl}/groups/${id}/action`, { bri });
+	};
+
+	return { ping, getLights, getRooms, getScenes, setRoomOnOff, setRoomBrightness };
 };
