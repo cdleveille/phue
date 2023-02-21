@@ -4,7 +4,7 @@ export const useApi = () => {
 	const request = async <T = any>(
 		method: string,
 		path: string,
-		body?: Record<string, string | number | boolean>,
+		body?: Record<string, any>,
 		headers?: Record<string, string>
 	) =>
 		new Promise<IResponse<T>>((resolve, reject) => {
@@ -29,27 +29,15 @@ export const useApi = () => {
 		return request<T>("GET", path);
 	};
 
-	const POST = async <T = any>(
-		path: string,
-		body?: Record<string, string | number | boolean>,
-		headers?: Record<string, string>
-	) => {
+	const POST = async <T = any>(path: string, body?: Record<string, any>, headers?: Record<string, string>) => {
 		return request<T>("POST", path, body, headers);
 	};
 
-	const PUT = async <T = any>(
-		path: string,
-		body?: Record<string, string | number | boolean>,
-		headers?: Record<string, string>
-	) => {
+	const PUT = async <T = any>(path: string, body?: Record<string, any>, headers?: Record<string, string>) => {
 		return request<T>("PUT", path, body, headers);
 	};
 
-	const DELETE = async <T = any>(
-		path: string,
-		body?: Record<string, string | number | boolean>,
-		headers?: Record<string, string>
-	) => {
+	const DELETE = async <T = any>(path: string, body?: Record<string, any>, headers?: Record<string, string>) => {
 		return request<T>("DELETE", path, body, headers);
 	};
 

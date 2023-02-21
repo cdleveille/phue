@@ -34,12 +34,26 @@ export const useLights = () => {
 	};
 
 	const setRoomBrightness = async (apiUrl: string, id: string, bri: number) => {
-		await PUT(`${apiUrl}/groups/${id}/action`, { bri });
+		await PUT(`${apiUrl}/groups/${id}/action`, { on: true, bri });
 	};
 
 	const setRoomScene = async (apiUrl: string, id: string, scene: string) => {
-		await PUT(`${apiUrl}/groups/${id}/action`, { scene });
+		await PUT(`${apiUrl}/groups/${id}/action`, { on: true, scene });
 	};
 
-	return { ping, getLights, getRooms, getScenes, getRoom, setRoomOnOff, setRoomBrightness, setRoomScene };
+	const setRoomColor = async (apiUrl: string, id: string, xy: number[]) => {
+		await PUT(`${apiUrl}/groups/${id}/action`, { on: true, xy });
+	};
+
+	return {
+		ping,
+		getLights,
+		getRooms,
+		getScenes,
+		getRoom,
+		setRoomOnOff,
+		setRoomBrightness,
+		setRoomScene,
+		setRoomColor
+	};
 };

@@ -9,18 +9,20 @@ import Room from "../components/Room";
 import { useLights } from "../hooks/useLights";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { IRoom, IScene } from "../types/abstract";
-import { LOCAL_STORAGE_KEY } from "../types/constants";
+import { API_URL_LOCAL_STORAGE_KEY } from "../types/constants";
 
 const Home = () => {
+	const [isLoading, setIsLoading] = useState(true);
 	const [rooms, setRooms] = useState<IRoom[]>();
 	const [scenes, setScenes] = useState<IScene[]>();
 	const [apiUrl, setApiUrl] = useState("");
-	const { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem } = useLocalStorage();
-	const { ping, getRooms, getScenes, getRoom, setRoomOnOff, setRoomBrightness, setRoomScene } = useLights();
+	const { getLocalStorageItem, removeLocalStorageItem } = useLocalStorage();
+	const { getRooms, getScenes } = useLights();
 
 	useEffect(() => {
-		const url = getLocalStorageItem<string>(LOCAL_STORAGE_KEY);
+		const url = getLocalStorageItem<string>(API_URL_LOCAL_STORAGE_KEY);
 		if (url) setApiUrl(url);
+		setIsLoading(false);
 	}, []);
 
 	useEffect(() => {
@@ -33,9 +35,11 @@ const Home = () => {
 	}, [apiUrl]);
 
 	const logOut = () => {
-		removeLocalStorageItem(LOCAL_STORAGE_KEY);
+		removeLocalStorageItem(API_URL_LOCAL_STORAGE_KEY);
 		setApiUrl("");
 	};
+
+	if (isLoading) return <Head />;
 
 	return (
 		<>
@@ -47,24 +51,15 @@ const Home = () => {
 					</IconButton>
 				</div>
 			)}
-			<div className="content absolute-centered">
+			<div className="rooms">
 				{apiUrl ? (
 					rooms?.map((room, i) => {
-						return (
-							<Room
-								key={i}
-								room={room}
-								scenes={scenes}
-								setRoomOnOff={setRoomOnOff}
-								setRoomBrightness={setRoomBrightness}
-								setRoomScene={setRoomScene}
-								apiUrl={apiUrl}
-								getRoom={getRoom}
-							/>
-						);
+						return <Room key={i} room={room} scenes={scenes} apiUrl={apiUrl} />;
 					})
 				) : (
-					<Auth setLocalStorageItem={setLocalStorageItem} setApiUrl={setApiUrl} ping={ping} />
+					<div className="absolute-centered">
+						<Auth setApiUrl={setApiUrl} />
+					</div>
 				)}
 			</div>
 		</>

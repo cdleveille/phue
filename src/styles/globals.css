@@ -12,6 +12,17 @@ body {
 	color: #c4c4c4;
 	user-select: none;
 	background-color: #252526;
+	overflow-x: hidden;
+}
+
+.rooms {
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+	width: 98.8vw;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
 }
 
 .absolute-centered {
@@ -24,10 +35,12 @@ body {
 .room {
 	background-color: #1e1e1e;
 	border: 2px solid #c4c4c4;
-	border-radius: 10px;
+	border-radius: 0.5rem;
 	margin: 1rem;
 	padding: 1rem;
-	width: 400px;
+	min-width: 350px;
+	width: 30%;
+	text-align: center;
 }
 
 .room-first-row {
