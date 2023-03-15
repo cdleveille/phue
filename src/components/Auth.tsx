@@ -7,11 +7,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 
+import { buildApiBaseUrl } from "../helpers/util";
 import { useLights } from "../hooks/useLights";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import {
-	API_URL_LOCAL_STORAGE_KEY,
+	BRIDGE_IP_LOCAL_STORAGE_KEY,
 	BRIDGE_IP_OPTIONS_LOCAL_STORAGE_KEY,
+	USERNAME_LOCAL_STORAGE_KEY,
 	USERNAME_OPTIONS_LOCAL_STORAGE_KEY
 } from "../types/constants";
 
@@ -105,16 +107,19 @@ const Auth = ({ setApiUrl }: IAuthProps) => {
 											setError("Both fields are required");
 											return;
 										}
-										const url = `https://${bridgeIpAddress}/api/${username}`;
+										const url = buildApiBaseUrl(bridgeIpAddress);
 										setIsLoading(true);
 										const res = await ping(url);
+										console.log(res);
+										return;
 										if (res[0]?.error?.description) {
 											const { description } = res[0].error;
 											setError(description.charAt(0).toUpperCase() + description.slice(1));
 											setIsLoading(false);
 											return;
 										}
-										setLocalStorageItem(API_URL_LOCAL_STORAGE_KEY, url);
+										setLocalStorageItem(BRIDGE_IP_LOCAL_STORAGE_KEY, bridgeIpAddress);
+										setLocalStorageItem(USERNAME_LOCAL_STORAGE_KEY, username);
 										if (!bridgeIps.includes(bridgeIpAddress)) {
 											setLocalStorageItem(BRIDGE_IP_OPTIONS_LOCAL_STORAGE_KEY, [
 												...bridgeIps,

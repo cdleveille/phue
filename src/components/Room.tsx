@@ -30,10 +30,9 @@ import { IRoom, IScene } from "../types/abstract";
 interface IRoomProps {
 	room: IRoom;
 	scenes: IScene[] | undefined;
-	apiUrl: string;
 }
 
-const Room = ({ room, scenes, apiUrl }: IRoomProps) => {
+const Room = ({ room, scenes }: IRoomProps) => {
 	const [on, setOn] = useState(room.state.any_on);
 	const [brightness, setBrightness] = useState(Math.round((room.action.bri / 254) * 100));
 	const [color, setColor] = useState<RGBColor>(xyBriToRgb(room.action.xy, Math.round((room.action.bri / 254) * 100)));
@@ -43,7 +42,7 @@ const Room = ({ room, scenes, apiUrl }: IRoomProps) => {
 	const handleSwitchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newState = e.target.checked;
 		setOn(newState);
-		await setRoomOnOff(apiUrl, room.id, newState);
+		await setRoomOnOff(room.id, newState);
 	};
 
 	const handleBrightnessChange = (_e: Event, value: number | number[]) => {
@@ -51,12 +50,12 @@ const Room = ({ room, scenes, apiUrl }: IRoomProps) => {
 	};
 
 	const handleBrightnessChangeCommitted = async (_e: Event | React.SyntheticEvent, value: number | number[]) => {
-		await setRoomBrightness(apiUrl, room.id, Math.round(((value as number) * 254) / 100));
+		await setRoomBrightness(room.id, Math.round(((value as number) * 254) / 100));
 	};
 
 	const handleSceneChange = async (sceneId: string) => {
-		await setRoomScene(apiUrl, room.id, sceneId);
-		const res = await getRoom(apiUrl, room.id);
+		await setRoomScene(room.id, sceneId);
+		const res = await getRoom(room.id);
 		setBrightness(Math.round((res.action.bri / 254) * 100));
 		setColor(xyBriToRgb(res.action.xy, Math.round((res.action.bri / 254) * 100)));
 		if (!on) setOn(true);
@@ -66,7 +65,7 @@ const Room = ({ room, scenes, apiUrl }: IRoomProps) => {
 
 	const onColorChangeComplete = async (color: ColorResult, _event: React.ChangeEvent<HTMLInputElement>) => {
 		const xy = rgbToXy(color.rgb);
-		await setRoomColor(apiUrl, room.id, xy);
+		await setRoomColor(room.id, xy);
 		if (!on) setOn(true);
 	};
 

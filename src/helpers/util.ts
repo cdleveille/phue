@@ -39,3 +39,5 @@ export const hexToRgb = (hex: string) => {
 		  } as RGBColor)
 		: null;
 };
+
+export const buildApiBaseUrl = (bridgeIP: string) => `https://${bridgeIP}/clip/v2/resource`;

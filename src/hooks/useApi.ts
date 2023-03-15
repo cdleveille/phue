@@ -25,8 +25,8 @@ export const useApi = () => {
 				});
 		});
 
-	const GET = async <T = any>(path: string) => {
-		return request<T>("GET", path);
+	const GET = async <T = any>(path: string, headers?: Record<string, string>) => {
+		return request<T>("GET", path, undefined, headers);
 	};
 
 	const POST = async <T = any>(path: string, body?: Record<string, any>, headers?: Record<string, string>) => {
