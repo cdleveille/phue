@@ -8,7 +8,7 @@ Download the [latest Electron desktop release](https://github.com/cdleveille/phu
 
 ## Security
 
-If you see an `ERR_CERT_AUTHORITY_INVALID` error in your browser when trying to connect to your bridge, click the "Advanced" button, and then "Proceed to <Bridge_IP_Address>". This is necessary because Philips Hue bridges do not provide an SSL certificate for the V1 API, so the browser blocks the response by default.
+If you see an `ERR_CERT_AUTHORITY_INVALID` error in your browser when trying to connect to your bridge, click the "Advanced" button, and then "Proceed to <Bridge_IP_Address>". Though it is completely safe to use (assuming you are simply allowing it to connect to the bridge on your own home network), the browser blocks the response from the bridge by default because Philips Hue bridges do not provide an SSL certificate in the V1 API.
 
 This is not an issue in the Electron desktop versions of the app, as it has been suppressed by appending the `ignore-certificate-errors` switch to the Chromium command line.
 
