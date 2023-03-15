@@ -107,7 +107,9 @@ const Auth = ({ setApiUrl }: IAuthProps) => {
 										}
 										const url = `https://${bridgeIpAddress}/api/${username}`;
 										setIsLoading(true);
-										const res = await ping(url);
+										const res = await ping(url).catch(() => {
+											window.open(url);
+										});
 										if (res[0]?.error?.description) {
 											const { description } = res[0].error;
 											setError(description.charAt(0).toUpperCase() + description.slice(1));
