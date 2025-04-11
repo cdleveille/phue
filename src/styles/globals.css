@@ -11,7 +11,7 @@ body {
 	font-size: 1.5rem;
 	color: #c4c4c4;
 	user-select: none;
-	background-color: #252526;
+	background: linear-gradient(135deg, #9c005d, #003c9e);
 	overflow-x: hidden;
 }
 
@@ -39,7 +39,8 @@ body {
 	margin: 1rem;
 	padding: 1rem;
 	min-width: 350px;
-	width: 30%;
+	max-width: 550px;
+	width: 100%;
 	text-align: center;
 }
 
